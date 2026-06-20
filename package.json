@@ -1,0 +1,45 @@
+{
+  "name": "@shipsilently/cli",
+  "version": "0.1.0",
+  "description": "ShipSilently CLI — auth validation, project/env discovery, and API key bootstrap",
+  "author": "ShipSilently",
+  "homepage": "https://shipsilently.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shipsilently/cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shipsilently/cli/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "bin": {
+    "ship": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "bun run src/index.ts",
+    "type-check": "tsc --noEmit"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "feature-flags",
+    "shipsilently",
+    "cli"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  }
+}
