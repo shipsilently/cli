@@ -14,8 +14,10 @@ export async function cmdKeys(args: ParsedArgs): Promise<void> {
     await createKey(args);
   } else if (sub === 'revoke') {
     await revokeKey(args);
+  } else if (sub === 'reset') {
+    await resetKey(args);
   } else {
-    console.error(`Unknown keys sub-command '${sub}'. Available: list, create, revoke`);
+    console.error(`Unknown keys sub-command '${sub}'. Available: list, create, revoke, reset`);
     process.exit(1);
   }
 }
@@ -87,4 +89,25 @@ async function revokeKey(args: ParsedArgs): Promise<void> {
   const client = createApiClient(apiUrl, token);
   await client.tokens.revoke(id);
   console.log(`Token ${id} revoked.`);
+}
+
+async function resetKey(args: ParsedArgs): Promise<void> {
+  const { token, apiUrl, positional } = args;
+
+  const id = positional[1];
+  if (!id) {
+    console.error('Usage: ship keys reset <token-id>');
+    process.exit(1);
+  }
+
+  const client = createApiClient(apiUrl, token);
+  const reset = await client.tokens.reset(id);
+  console.log(`Token ${id} reset. The previous secret no longer authenticates.`);
+  console.log('');
+  console.log(`Prefix      : ${reset.tokenPrefix}…`);
+  if (reset.token) {
+    console.log(`Token       : ${reset.token}`);
+    console.log('');
+    console.log('⚠  Save this token now — it will not be shown again.');
+  }
 }

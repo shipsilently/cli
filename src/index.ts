@@ -17,10 +17,18 @@ Commands:
   whoami                      Verify token and show account info
   projects                    List projects
   envs <project-key>          List environments for a project
+  envs update <project> <env> Update an environment (--name)
   flags <project-key>         List feature flags for a project
+  flags get <project> <flag>  Show a flag: per-env state + targeting rules
+  flags states <project>      Batch per-environment flag state (--env <key>)
+  flags deprecate <p> <flag>  Mark a flag for removal (--note, --remove-by)
+  flags undeprecate <p> <f>   Return a deprecated flag to active
+  flags restore <p> <flag>    Restore an archived flag
+  flags purge <p> <flag>      Permanently delete an archived flag (--yes)
   keys list                   List operator tokens
   keys create <name>          Create a new operator token
   keys revoke <token-id>      Revoke an operator token
+  keys reset <token-id>       Rotate a token's secret in place
   config set token <token>    Save a token to the local config file
   config set api-url <url>    Override the API base URL
   config show                 Show current config
@@ -46,6 +54,9 @@ Examples:
   ship projects
   ship envs my-project
   ship flags my-project
+  ship flags get my-project new-checkout
+  ship flags states my-project --env production
+  ship flags deprecate my-project old-banner --note "baked in" --remove-by 2026-12-01
   ship keys list
   ship keys create ci-deploy --role writer
 `.trim();
